@@ -1,0 +1,92 @@
+# tasks file
+---
+- name: install dependencies
+  ansible.builtin.apt:
+    name: "{{ replace_dependencies }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-dependencies
+
+- name: create (download) directory
+  ansible.builtin.file:
+    path: "{{ replace_download_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-download
+
+- name: download (latest)
+  ansible.builtin.get_url:
+    url: "{{ replace_download_url }}"
+    dest: "{{ replace_download_path }}/{{ replace_download_url | basename }}"
+    owner: root
+    group: root
+    mode: '0644'
+    force: true
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-download
+
+- name: create (build) directory
+  ansible.builtin.file:
+    path: "{{ replace_build_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-build
+
+- name: extract
+  ansible.builtin.unarchive:
+    src: "{{ replace_download_path }}/{{ replace_download_url | basename }}"
+    dest: "{{ replace_build_path }}"
+    creates: "{{ replace_build_path }}/replace-{{ replace_version }}"
+    copy: false
+  register: _result
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-build
+
+- name: make install
+  ansible.builtin.command: >
+    make install
+  args:
+    chdir: "{{ replace_build_path }}/replace-{{ replace_version }}"
+  changed_when: true
+  when: _result is changed
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-build
+    - replace-install-build-make-install
+
+- name: verify
+  ansible.builtin.command: >
+    replace -?
+  register: _verify_version
+  failed_when: "replace_version | string not in _verify_version.stderr"
+  changed_when: false
+  tags:
+    - configuration
+    - replace
+    - replace-install
+    - replace-install-verify

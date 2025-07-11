@@ -1,0 +1,27 @@
+# meta file
+---
+galaxy_info:
+  namespace: oefenweb
+  role_name: replace
+  author: Mischa ter Smitten
+  company: Oefenweb.nl B.V.
+  description: Set up (the latest version of) replace in Debian-like systems
+  license: MIT
+  min_ansible_version: 2.10.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - jammy
+        - noble
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+        - bookworm
+  galaxy_tags:
+    - system
+    - networking
+    - web
+dependencies: []
