@@ -83,7 +83,7 @@
   ansible.builtin.command: >
     replace -?
   register: _verify_version
-  failed_when: "replace_version not in _verify_version.stdout"
+  failed_when: "replace_version | string not in _verify_version.stderr"
   changed_when: false
   tags:
     - configuration
