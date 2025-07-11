@@ -11,7 +11,8 @@ Set up (the latest version of) [replace](https://replace.richardlloyd.org.uk/) i
 
 #### Variables
 
-* `replace_version`: [default: `1.7.4.2`]: Version to install
+* `replace_version`: [default: `2.24`]: Version to install
+* `replace_download_url`: [default: `"http://hpux.connect.org.uk/ftp/hpux/Users/replace-{{ replace_version }}/replace-{{ replace_version }}-src-11.31.tar.gz"`]: Download URL
 
 ## Dependencies
 
