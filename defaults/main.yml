@@ -1,0 +1,4 @@
+# defaults file
+---
+replace_version: 2.24
+replace_download_url: "http://hpux.connect.org.uk/ftp/hpux/Users/replace-{{ replace_version }}/replace-{{ replace_version }}-src-11.31.tar.gz"

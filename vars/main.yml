@@ -1,0 +1,7 @@
+# vars file
+---
+replace_dependencies:
+  - build-essential
+
+replace_build_path: /var/lib/ansible/replace/build
+replace_download_path: /var/lib/ansible/replace/downloads
